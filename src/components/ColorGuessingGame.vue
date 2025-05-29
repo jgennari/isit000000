@@ -94,17 +94,23 @@ onMounted(() => {
   padding: 1rem;
   text-align: center;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+  position: relative;
 }
 
 h1 {
   font-size: clamp(1.5rem, 6vw, 2.5rem);
-  margin: 0.5em 0;
+  margin: 0.5em 0 0.25em;
   line-height: 1.2;
+  padding: 0 0.5rem;
 }
 
 .color-display {
-  width: var(--color-display-size, min(90vw, 300px));
-  height: var(--color-display-size, min(90vw, 300px));
+  width: var(--color-display-size, min(75vw, 300px));
+  height: var(--color-display-size, min(75vw, 300px));
   margin: 1.5rem auto;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -166,9 +172,15 @@ h1 {
 }
 
 .progress {
-  margin-top: 1.5rem;
   font-size: 1.1rem;
   color: #aaa;
+  padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(51, 51, 51, 0.9);
+  z-index: 10;
 }
 
 .game-over h2 {

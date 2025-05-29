@@ -109,23 +109,24 @@ h1 {
 }
 
 .color-display {
-  width: var(--color-display-size, min(75vw, 300px));
-  height: var(--color-display-size, min(75vw, 300px));
-  margin: 1.5rem auto;
+  width: var(--color-display-size, min(80vw, 280px));
+  height: var(--color-display-size, min(80vw, 280px));
+  margin: 1rem auto;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   touch-action: manipulation;
+  flex-shrink: 0;
 }
 
 .button-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin: 1.5rem 0;
+  gap: 0.75rem;
+  margin: 1rem auto;
   width: 100%;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 280px;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
 }
 
 .answer-btn {

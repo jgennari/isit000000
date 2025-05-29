@@ -12,7 +12,11 @@ import ColorGuessingGame from './components/ColorGuessingGame.vue';
 :root {
   --max-content-width: 100%;
   --content-padding: 1rem;
-  --color-display-size: min(90vw, 400px);
+  --color-display-size: min(80vw, 280px);
+  
+  @media (min-width: 600px) {
+    --color-display-size: min(90vw, 400px);
+  }
 }
 
 html, body {

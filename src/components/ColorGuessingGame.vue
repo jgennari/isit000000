@@ -88,39 +88,56 @@ onMounted(() => {
 
 <style scoped>
 .game-container {
-  max-width: 500px;
+  width: 100%;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  margin: 0.5em 0;
+  line-height: 1.2;
 }
 
 .color-display {
-  width: 300px;
-  height: 300px;
-  margin: 2rem auto;
+  width: var(--color-display-size, min(90vw, 300px));
+  height: var(--color-display-size, min(90vw, 300px));
+  margin: 1.5rem auto;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  touch-action: manipulation;
 }
 
 .button-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   gap: 1rem;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .answer-btn {
-  padding: 0.8rem 2rem;
+  padding: 1rem;
   font-size: 1.1rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   transition: transform 0.1s, opacity 0.2s;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .answer-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.98);
 }
 
 .yes {
@@ -134,29 +151,72 @@ onMounted(() => {
 }
 
 .reset-btn {
-  padding: 0.8rem 2rem;
+  padding: 1rem 2rem;
   font-size: 1.1rem;
   background-color: #2196F3;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 300px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .progress {
-  margin-top: 2rem;
-  font-size: 1.2rem;
-  color: #666;
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: #aaa;
 }
 
 .game-over h2 {
   color: #2196F3;
   margin-bottom: 1rem;
+  font-size: 1.8rem;
 }
 
-game-over p {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+.game-over p {
+  font-size: 1.4rem;
+  margin: 1rem 0;
+}
+
+/* Landscape mode adjustments */
+@media (min-width: 600px) {
+  .button-container {
+    flex-direction: row;
+    max-width: 100%;
+  }
+  
+  .answer-btn {
+    padding: 0.8rem 1.5rem;
+    width: auto;
+    flex: 1;
+  }
+  
+  .reset-btn {
+    max-width: 300px;
+  }
+}
+
+/* Prevent text selection on buttons */
+button {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Better touch targets for mobile */
+@media (max-width: 480px) {
+  .answer-btn, .reset-btn {
+    padding: 1.2rem;
+    font-size: 1.2rem;
+  }
+  
+  .progress {
+    font-size: 1rem;
+  }
 }
 </style>

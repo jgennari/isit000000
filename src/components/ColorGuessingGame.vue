@@ -33,21 +33,37 @@ const score = ref(0);
 const gameOver = ref(false);
 const currentColor = ref('');
 const isBlack = ref(false);
+const colorBag = ref<Array<{color: string, isBlack: boolean}>>([]);
 
-// Generate a random dark color close to black
-const generateDarkColor = (): { color: string, isBlack: boolean } => {
-  // 20% chance to generate true black
-  if (Math.random() < 0.3 && currentRound.value <= 7) { // Ensure we don't go over 3 true blacks
-    return { color: '#000000', isBlack: true };
+// Generate a bag of 10 colors with 3-5 true blacks and the rest as dark grays
+const generateColorBag = (): Array<{color: string, isBlack: boolean}> => {
+  const bag: Array<{color: string, isBlack: boolean}> = [];
+  
+  // Determine number of true blacks (3-5)
+  const numBlacks = 3 + Math.floor(Math.random() * 3);
+  
+  // Add true blacks
+  for (let i = 0; i < numBlacks; i++) {
+    bag.push({ color: '#000000', isBlack: true });
   }
   
-  // Generate a very dark gray
-  const darkValue = Math.floor(Math.random() * 30); // 0-29 for dark grays
-  const hex = darkValue.toString(16).padStart(2, '0');
-  return { 
-    color: `#${hex}${hex}${hex}`, 
-    isBlack: false 
-  };
+  // Add dark grays
+  for (let i = numBlacks; i < 10; i++) {
+    const darkValue = 1 + Math.floor(Math.random() * 29); // 1-29 for dark grays (avoiding pure black)
+    const hex = darkValue.toString(16).padStart(2, '0');
+    bag.push({ 
+      color: `#${hex}${hex}${hex}`, 
+      isBlack: false 
+    });
+  }
+  
+  // Shuffle the bag using Fisher-Yates algorithm
+  for (let i = bag.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [bag[i], bag[j]] = [bag[j], bag[i]];
+  }
+  
+  return bag;
 };
 
 const nextRound = () => {
@@ -57,9 +73,9 @@ const nextRound = () => {
   }
   
   currentRound.value++;
-  const { color, isBlack: isBlackColor } = generateDarkColor();
-  currentColor.value = color;
-  isBlack.value = isBlackColor;
+  const nextColor = colorBag.value[currentRound.value - 1];
+  currentColor.value = nextColor.color;
+  isBlack.value = nextColor.isBlack;
 };
 
 const checkAnswer = (userAnswer: boolean) => {
@@ -73,16 +89,16 @@ const resetGame = () => {
   currentRound.value = 1;
   score.value = 0;
   gameOver.value = false;
-  const { color, isBlack: isBlackColor } = generateDarkColor();
-  currentColor.value = color;
-  isBlack.value = isBlackColor;
+  colorBag.value = generateColorBag();
+  currentColor.value = colorBag.value[0].color;
+  isBlack.value = colorBag.value[0].isBlack;
 };
 
 // Initialize game
 onMounted(() => {
-  const { color, isBlack: isBlackColor } = generateDarkColor();
-  currentColor.value = color;
-  isBlack.value = isBlackColor;
+  colorBag.value = generateColorBag();
+  currentColor.value = colorBag.value[0].color;
+  isBlack.value = colorBag.value[0].isBlack;
 });
 </script>
 
